@@ -86,3 +86,4 @@ vitrine/
 ├── docs/                     documentação (01 a 12)
 └── wireframes/               wireframes (PNG e SVG)
 ```
+.
