@@ -31,14 +31,13 @@ Questão norteadora do projeto: *"Qual aplicativo de celular pode auxiliar no cr
 | 1.2 Arquivo APK gerado | [`apk/vitrine.apk`](apk/vitrine.apk) — como foi gerado em [docs/06-geracao-apk.md](docs/06-geracao-apk.md) |
 | 1 (execução em outro ambiente) | [docs/10-como-executar.md](docs/10-como-executar.md) |
 | 2. Detalhamento da construção do banco de dados local | [docs/09-construcao-do-banco.md](docs/09-construcao-do-banco.md) |
-| 3. Vídeo demonstrativo (YouTube, não listado) | Capítulo [Vídeo demonstrativo](#vídeo-demonstrativo) abaixo e [docs/11-video-demonstrativo.md](docs/11-video-demonstrativo.md) |
 | 4. Repositório da Etapa 1 revisado | Todos os documentos abaixo foram atualizados para a situação final |
 
 ## Vídeo demonstrativo
 
-**Link (YouTube, não listado):** _colar aqui o link depois de publicar o vídeo_
+**Link (YouTube, não listado):https://youtu.be/dQvvvpWoFd4?si=GIER0atDwhOsgMdZ
 
-Roteiro e instruções de gravação: [docs/11-video-demonstrativo.md](docs/11-video-demonstrativo.md).
+
 
 ## Índice da documentação
 
