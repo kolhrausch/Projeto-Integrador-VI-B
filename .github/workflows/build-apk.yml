@@ -1,0 +1,81 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'apk/**'
+      - 'docs/**'
+      - 'wireframes/**'
+      - '**.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar o Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Instalar o Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.24.5'
+          cache: true
+
+      - name: Gerar o projeto Android (se ainda não existir)
+        run: bash scripts/bootstrap.sh
+
+      - name: Versões
+        run: flutter --version
+
+      - name: Baixar dependências
+        run: flutter pub get
+
+      - name: Análise estática
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+
+      - name: Testes unitários
+        run: flutter test
+
+      - name: Validar o SQL do banco local
+        run: python3 tool/validar_sql.py
+
+      - name: Gerar o APK (release)
+        run: flutter build apk --release
+
+      - name: Copiar o APK para apk/
+        run: |
+          mkdir -p apk
+          cp build/app/outputs/flutter-apk/app-release.apk apk/vitrine.apk
+
+      - name: Guardar o APK como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitrine-apk
+          path: apk/vitrine.apk
+
+      - name: Salvar APK e pasta android/ no repositório
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A android apk
+          git add pubspec.lock || true
+          git add .metadata || true
+          if git diff --cached --quiet; then
+            echo "Nada novo para salvar."
+          else
+            git commit -m "ci: atualiza APK e projeto Android [skip ci]"
+            git push
+          fi
